@@ -7,8 +7,9 @@ import {
   Crown,
   Loader2,
   AlertCircle,
-  WifiOff,
+  Globe,
 } from "lucide-react";
+import styles from "./AuthStatus.module.css";
 
 export function AuthStatus() {
   const {
@@ -50,9 +51,45 @@ export function AuthStatus() {
     }
   };
 
+  // Get plan info for display
+  const getPlanInfo = () => {
+    if (!user) {
+      return {
+        type: "guest",
+        name: "Guest",
+        limit: "20 packages",
+        icon: Globe,
+        className: "guest",
+      };
+    }
+
+    const isPaid = subscription?.isPaid || false;
+
+    if (isPaid) {
+      return {
+        type: "pro",
+        name: "Pro",
+        limit: "Unlimited",
+        icon: Crown,
+        className: "pro",
+      };
+    }
+
+    return {
+      type: "free",
+      name: "Free",
+      limit: "100 packages",
+      icon: User,
+      className: "free",
+    };
+  };
+
+  const planInfo = getPlanInfo();
+  const PlanIcon = planInfo.icon;
+
   if (loading) {
     return (
-      <div className="auth-status loading">
+      <div className={`${styles.authStatus} ${styles.loading}`}>
         <Loader2 size={16} className="animate-spin" />
         <span>Loading...</span>
       </div>
@@ -62,8 +99,8 @@ export function AuthStatus() {
   // Show connection status if there's an issue (but still allow mock auth)
   if (connectionError && connectionError.includes("mock")) {
     return (
-      <div className="auth-status unauthenticated">
-        <div className="auth-config-warning">
+      <div className={styles.authStatus}>
+        <div className={styles.authConfigWarning}>
           <AlertCircle size={16} />
           <span>Mock Auth</span>
         </div>
@@ -71,7 +108,7 @@ export function AuthStatus() {
           <button
             onClick={handleSignIn}
             disabled={isSigningIn}
-            className="auth-button sign-in"
+            className={`${styles.authButton} ${styles.signIn}`}
           >
             {isSigningIn ? (
               <Loader2 size={16} className="animate-spin" />
@@ -91,35 +128,32 @@ export function AuthStatus() {
     const isPaid = subscription?.isPaid || false;
 
     return (
-      <div className="auth-status authenticated">
-        <div className="user-info">
+      <div className={`${styles.authStatus} ${styles.authenticated}`}>
+        <div className={styles.userInfo}>
           {avatarUrl ? (
-            <img src={avatarUrl} alt={userName} className="user-avatar" />
+            <img src={avatarUrl} alt={userName} className={styles.userAvatar} />
           ) : (
-            <div className="user-avatar-placeholder">
+            <div className={styles.userAvatarPlaceholder}>
               <User size={16} />
             </div>
           )}
-          <div className="user-details">
-            <span className="user-name">{userName}</span>
-            <div className="user-plan">
-              {isPaid ? (
-                <div className="plan-badge pro">
-                  <Crown size={12} />
-                  <span>Pro</span>
-                </div>
-              ) : (
-                <div className="plan-badge free">
-                  <span>Free</span>
-                </div>
-              )}
+          <div className={styles.userDetails}>
+            <span className={styles.userName}>{userName}</span>
+            <div className={styles.userPlan}>
+              <div
+                className={`${styles.planBadge} ${styles[planInfo.className]}`}
+              >
+                <PlanIcon size={12} />
+                <span>{planInfo.name}</span>
+                <span className={styles.planLimit}>({planInfo.limit})</span>
+              </div>
             </div>
           </div>
         </div>
         <button
           onClick={handleSignOut}
           disabled={isSigningOut}
-          className="auth-button sign-out"
+          className={`${styles.authButton} ${styles.signOut}`}
           title="Sign out"
         >
           {isSigningOut ? (
@@ -132,18 +166,29 @@ export function AuthStatus() {
     );
   }
 
+  // Show plan info for guests too
   return (
-    <div className="auth-status unauthenticated">
+    <div className={styles.authStatus}>
       {error && (
-        <div className="auth-error">
+        <div className={styles.authError}>
           <AlertCircle size={14} />
           <span>{error}</span>
         </div>
       )}
+
+      {/* Show guest plan info */}
+      <div className={styles.guestPlanInfo}>
+        <div className={`${styles.planBadge} ${styles[planInfo.className]}`}>
+          <PlanIcon size={12} />
+          <span>{planInfo.name}</span>
+          <span className={styles.planLimit}>({planInfo.limit})</span>
+        </div>
+      </div>
+
       <button
         onClick={handleSignIn}
         disabled={isSigningIn}
-        className="auth-button sign-in"
+        className={`${styles.authButton} ${styles.signIn}`}
       >
         {isSigningIn ? (
           <Loader2 size={16} className="animate-spin" />
