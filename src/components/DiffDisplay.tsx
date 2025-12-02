@@ -1,5 +1,6 @@
 import React from "react";
 import { TrendingUp, TrendingDown, Minus } from "lucide-react";
+import styles from "./DiffDisplay.module.css";
 
 interface DiffDisplayProps {
   current: number;
@@ -34,7 +35,11 @@ export function DiffDisplay({
       : `${diff > 0 ? "+" : ""}${diff.toLocaleString()}`;
 
   return (
-    <span className={`diff-display ${isPositive ? "positive" : "negative"}`}>
+    <span
+      className={`${styles.diffDisplay} ${
+        isPositive ? styles.positive : styles.negative
+      }`}
+    >
       {showIcon &&
         (isPositive ? <TrendingUp size={12} /> : <TrendingDown size={12} />)}
       <span>({displayValue})</span>
