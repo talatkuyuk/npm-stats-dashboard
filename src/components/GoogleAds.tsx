@@ -1,4 +1,5 @@
 import React, { useEffect } from "react";
+import styles from "./GoogleAds.module.css";
 
 // Global set to track which ad slots have already been initialized
 const initializedAdSlots = new Set<string>();
@@ -33,7 +34,10 @@ export function GoogleAd({
   }, [adSlot]);
 
   return (
-    <div className={`google-ad-container ${className || ""}`} style={style}>
+    <div
+      className={`${styles.googleAdContainer} ${className || ""}`}
+      style={style}
+    >
       <ins
         className="adsbygoogle"
         style={{ display: "block", ...style }}
@@ -52,13 +56,13 @@ interface AdSidebarProps {
 
 export function AdSidebar({ className }: AdSidebarProps) {
   return (
-    <div className={`ad-sidebar ${className || ""}`}>
-      <div className="ad-sidebar-header">
-        <span className="ad-label">Sponsored</span>
+    <div className={`${styles.adSidebar} ${className || ""}`}>
+      <div className={styles.adSidebarHeader}>
+        <span className={styles.adLabel}>Sponsored</span>
       </div>
 
-      {/* Ad Slot 1 - Rectangle */}
-      <div className="ad-widget">
+      {/* Ad Slot 1 - Rectangle 250px */}
+      <div className={styles.adWidget}>
         <GoogleAd
           adSlot="1234567890" // Replace with your actual ad slot ID
           adFormat="rectangle"
@@ -67,17 +71,15 @@ export function AdSidebar({ className }: AdSidebarProps) {
         />
       </div>
 
-      {/* Ad Slot 2 - Rectangle */}
-      <div className="ad-widget">
+      {/* Ad Slot 2 - Rectangle 300px */}
+      <div className={styles.adWidget}>
         <GoogleAd
           adSlot="1234567891" // Replace with your actual ad slot ID
-          adFormat="vertical"
-          style={{ width: "300px", height: "250px" }}
-          className="ad-vertical"
+          adFormat="rectangle"
+          style={{ width: "300px", height: "300px" }}
+          className="ad-rectangle"
         />
       </div>
-
-      {/* Removed the third ad slot as requested */}
     </div>
   );
 }
