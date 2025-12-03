@@ -1,0 +1,168 @@
+.adSidebar {
+  width: 320px;
+  padding: 1.5rem 1rem;
+  background: linear-gradient(
+    135deg,
+    var(--color-input-bg) 0%,
+    var(--color-hover) 100%
+  );
+  border-left: 1px solid var(--color-border);
+  position: sticky;
+  top: 0;
+  height: 100vh;
+  overflow: hidden;
+  flex-shrink: 0;
+}
+
+.adSidebarHeader {
+  margin-bottom: 1rem;
+  text-align: center;
+}
+
+.adLabel {
+  font-size: 0.65rem;
+  color: var(--color-text);
+  opacity: 0.6;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  font-weight: 600;
+}
+
+.adWidget {
+  margin-bottom: 1.5rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 250px;
+  max-height: 300px;
+  background-color: var(--color-background);
+  border: 1px solid var(--color-border);
+  border-radius: 0.5rem;
+  position: relative;
+  overflow: hidden;
+
+  &:last-child {
+    margin-bottom: 0;
+  }
+
+  &:empty::before {
+    content: "Advertisement";
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    color: var(--color-text);
+    opacity: 0.4;
+    font-size: 0.75rem;
+    font-style: italic;
+  }
+}
+
+.googleAdContainer {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+/* Main content ads - match the same gap as FeaturePromotion */
+.mainContentAds {
+  margin-top: 1.5rem; /* Same gap as FeaturePromotion */
+  padding: 1.5rem 1rem; /* Match sidebar padding */
+  background: linear-gradient(
+    135deg,
+    var(--color-input-bg) 0%,
+    var(--color-hover) 100%
+  );
+  border: 1px solid var(--color-border);
+  border-radius: 1rem;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.mainContentAdsHeader {
+  margin-bottom: 1rem;
+  text-align: center;
+}
+
+.mainContentAdsGrid {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+}
+
+/* Two medium ads side by side */
+.mainAdsRow {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1.5rem; /* Same gap as sidebar ads */
+}
+
+.mainAdWidget {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: var(--color-background);
+  border: 1px solid var(--color-border);
+  border-radius: 0.5rem; /* Same border radius as sidebar */
+  overflow: hidden;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  min-height: 250px;
+  max-height: 300px;
+  position: relative;
+
+  &:empty::before {
+    content: "Advertisement";
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    color: var(--color-text);
+    opacity: 0.4;
+    font-size: 0.75rem;
+    font-style: italic;
+  }
+}
+
+@media (max-width: 1200px) {
+  .adSidebar {
+    width: 100%;
+    height: auto;
+    position: static;
+    border-left: none;
+    border-top: 1px solid var(--color-border);
+    padding: 1rem;
+    overflow: visible;
+  }
+
+  .adWidget {
+    margin-bottom: 1rem;
+    min-height: 250px;
+    max-height: 300px;
+  }
+
+  .mainAdsRow {
+    grid-template-columns: 1fr;
+    gap: 1rem;
+  }
+
+  .mainContentAds {
+    margin-top: 1.5rem;
+    padding: 1.5rem;
+  }
+
+  .mainContentAdsGrid {
+    gap: 1rem;
+  }
+}
+
+@media (max-width: 768px) {
+  .mainContentAds {
+    margin-top: 1rem;
+    padding: 1rem;
+  }
+
+  .mainContentAdsGrid {
+    gap: 1rem;
+  }
+}
